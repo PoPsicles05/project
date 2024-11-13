@@ -7,8 +7,17 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { toast } from '@/components/ui/use-toast'
 
+interface Prescription {
+  id: number
+  medication: string
+  dosage: string
+  frequency: string
+  start_date: string
+  end_date: string | null
+}
+
 export default function Prescriptions() {
-  const [prescriptions, setPrescriptions] = useState([])
+  const [prescriptions, setPrescriptions] = useState<Prescription[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -28,7 +37,7 @@ export default function Prescriptions() {
         variant: "destructive",
       })
     } else {
-      setPrescriptions(data)
+      setPrescriptions(data as Prescription[])
     }
     setLoading(false)
   }
@@ -62,7 +71,7 @@ export default function Prescriptions() {
                   <TableCell>{prescription.dosage}</TableCell>
                   <TableCell>{prescription.frequency}</TableCell>
                   <TableCell>{prescription.start_date}</TableCell>
-                  <TableCell>{prescription.end_date}</TableCell>
+                  <TableCell>{prescription.end_date || 'Ongoing'}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
