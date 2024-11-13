@@ -7,8 +7,16 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { toast } from '@/components/ui/use-toast'
 
+interface TestResult {
+  id: number
+  date: string
+  test: string
+  result: string
+  doctor: string
+}
+
 export default function TestResults() {
-  const [results, setResults] = useState([])
+  const [results, setResults] = useState<TestResult[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -28,7 +36,7 @@ export default function TestResults() {
         variant: "destructive",
       })
     } else {
-      setResults(data)
+      setResults(data as TestResult[])
     }
     setLoading(false)
   }
@@ -52,7 +60,6 @@ export default function TestResults() {
                 <TableHead>Test</TableHead>
                 <TableHead>Result</TableHead>
                 <TableHead>Doctor</TableHead>
-                <TableHead>Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -62,9 +69,6 @@ export default function TestResults() {
                   <TableCell>{result.test}</TableCell>
                   <TableCell>{result.result}</TableCell>
                   <TableCell>{result.doctor}</TableCell>
-                  <TableCell>
-                    <Button variant="outline" size="sm">View Details</Button>
-                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
